@@ -52,7 +52,8 @@ extern G__linked_taginfo G__DictLN_TCanvas;
 extern G__linked_taginfo G__DictLN_iteratorlEbidirectional_iterator_tagcOTObjectmUcOlongcOconstsPTObjectmUmUcOconstsPTObjectmUaNgR;
 extern G__linked_taginfo G__DictLN_TGMainFrame;
 extern G__linked_taginfo G__DictLN_TGTextEntry;
-extern G__linked_taginfo G__DictLN_TRootEmbeddedCanvas;
+extern G__linked_taginfo G__DictLN_TGNumberEntry;
+extern G__linked_taginfo G__DictLN_TGComboBox;
 extern G__linked_taginfo G__DictLN_MainFrame;
 
 /* STUB derived class for protected member access */

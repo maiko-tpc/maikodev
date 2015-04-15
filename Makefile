@@ -1,7 +1,7 @@
 all: socket maikodev
 
-socket: com.c
-	gcc -o socket com.c
+socket: rec.c
+	gcc -lm -o rec rec.c
 
 maikodev: maikodev.cxx maikodev.h
 	rootcint -f Dict.cxx -c maikodev.h LinkDef.h
