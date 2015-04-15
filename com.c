@@ -23,9 +23,15 @@ int main(int argc, char * argv[]){
   char buff[256];
   long buff2;
   char *endptr;
-  long double ADC_val[8];
-  long double pressure;
+  //  long double ADC_val[8];
+  long ADC_val[8];
+  float pressure;
+  float temp;
   char *outfile;
+
+  double p_offset;
+  p_offset=1.285; // measured on 2014/12/04 at new_SUBARU
+
 
   if(argc != 2) exit(0);
 
@@ -35,7 +41,8 @@ int main(int argc, char * argv[]){
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     //  printf("id= %d \n", sockfd);
     address.sin_family = AF_INET ;
-    address.sin_addr.s_addr =inet_addr("172.16.205.94");
+    address.sin_addr.s_addr =inet_addr("172.16.205.94"); // RCNP
+    //    address.sin_addr.s_addr =inet_addr("172.16.213.8"); // new SUBARU
     address.sin_port =htons(12289);
     len = sizeof(address);
     result = connect(sockfd, (struct sockaddr*)&address, len);
@@ -63,20 +70,30 @@ int main(int argc, char * argv[]){
     /* Check if the header data is correct */
     if(strstr(header, "11OK") == NULL) exit(0);
     
+    printf("-------------\n");
     for(i=0; i<8; i++){
       ADC_val[i]= -10000;
       
       sprintf(buff, "0x%c%c%c%c", data[4*i+4], data[4*i+5],
 	      data[4*i+6], data[4*i+7]);
-      
+
+      /*      printf("%c %c %c %c \n", data[4*i+4], data[4*i+5],
+	      data[4*i+6], data[4*i+7]);*/
+
       /* Convert hex string to dec integer */
       buff2= strtol(buff, &endptr, 16);
       ADC_val[i]= buff2;
-      if(ADC_val[i]>10000) ADC_val[i]=ADC_val[i]-65535;
-      pressure = 0.40/3.0*ADC_val[0];
+      
+      //      if(ADC_val[i]>10000) ADC_val[i]=ADC_val[i]-65535;
+      pressure = 0.40/3.0*ADC_val[0]-p_offset;
+      temp = ADC_val[5]/30000.0*190.0-40.0;
+
+      if(pressure<0.0) pressure=0;
       //    printf("ADC CH%d= %d \n", i, ADC_val[i]);
     }
-    
+      printf("-------------\n");      
+
+      printf("%d\n", ADC_val[5]);
     /* File output */
     outfile = argv[1];
     
@@ -101,10 +118,17 @@ int main(int argc, char * argv[]){
     
     fprintf(output, "%d ", timer);
     
-    fprintf(output, "%f \n", pressure);
+    fprintf(output, "%f ", pressure);
+    fprintf(output, "%d ", ADC_val[1]);
+    fprintf(output, "%d ", ADC_val[2]);
+    fprintf(output, "%d ", ADC_val[3]);
+    fprintf(output, "%d ", ADC_val[4]);
+    fprintf(output, "%f ", temp);
+    fprintf(output, "%d ", ADC_val[6]);
+    fprintf(output, "%d \n", ADC_val[7]);
     fclose(output);
 
-    sleep(60);
+    sleep(15);
   }
   return 0;
 }

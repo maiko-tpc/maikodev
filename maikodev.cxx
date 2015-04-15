@@ -262,7 +262,7 @@ MainFrame::MainFrame(){
    fTextEntry690 = new TGTextEntry(fCompositeFrame669, new TGTextBuffer(31),-1,uGC->GetGC(),ufont->GetFontStruct(),kSunkenFrame | kDoubleBorder | kOwnBackground);
    fTextEntry690->SetMaxLength(4096);
    fTextEntry690->SetAlignment(kTextLeft);
-   fTextEntry690->SetText("/home/pi/maikodev/data/20140903.dat");
+   fTextEntry690->SetText("/home/pi/maikodev/data/20150211.dat");
    fTextEntry690->Resize(286,fTextEntry690->GetDefaultHeight());
    fCompositeFrame669->AddFrame(fTextEntry690, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
    fTextEntry690->MoveResize(650,80,286,22);
@@ -305,7 +305,7 @@ MainFrame::MainFrame(){
    fTextEntry693 = new TGTextEntry(fCompositeFrame669, new TGTextBuffer(31),-1,uGC->GetGC(),ufont->GetFontStruct(),kSunkenFrame | kDoubleBorder | kOwnBackground);
    fTextEntry693->SetMaxLength(4096);
    fTextEntry693->SetAlignment(kTextLeft);
-   fTextEntry693->SetText("/home/pi/maikodev/data/20140903.dat");
+   fTextEntry693->SetText("/home/pi/maikodev/data/20150211.dat");
    fTextEntry693->Resize(286,fTextEntry693->GetDefaultHeight());
    fCompositeFrame669->AddFrame(fTextEntry693, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
    fTextEntry693->MoveResize(650,350,286,22);
@@ -412,6 +412,7 @@ void MainFrame::DoPrint(){
   int pri_result;
 
   printer_name = fTextEntry684->GetText();
+  c123->SaveAs("out.ps");
 
   /* Check if the printer exist. */
   sprintf(pingcommand, "ping -q -c 1 %s > /dev/null", printer_name);
@@ -423,7 +424,6 @@ void MainFrame::DoPrint(){
 
   if(pri_result == 0){
     sprintf(pricommand, "lpr -P %s out.ps", printer_name);
-    c123->SaveAs("out.ps");
     system(pricommand);
     //    system("rm -f out.ps");
   }
@@ -440,7 +440,8 @@ void MainFrame::Record(){
   sprintf(command, "/home/pi/maikodev/program/socket %s &", recfile);
 
   /* Check if the PLC CPU exits. */
-  plc_result=system("ping -q -c 1 172.16.205.94 > /dev/null");
+  plc_result=system("ping -q -c 1 172.16.205.94 > /dev/null"); //RCNP
+  //plc_result=system("ping -q -c 1 172.16.213.8 > /dev/null"); // New SUBARU
 
   if(plc_result != 0){
     cout << "CPU connection error!!" << endl;
@@ -464,9 +465,11 @@ void MainFrame::DoPlot(){
   else{
     TGraph *g = new TGraph(plotfile);
     gStyle->SetTimeOffset(-788918400);
-    //    gStyle->SetNdivisions(10);
+    gStyle->SetNdivisions(10);
     g->GetXaxis()->SetTimeDisplay(1);
-    g->GetXaxis()->SetTimeFormat("%H:%M");
+    //    g->GetXaxis()->SetTimeFormat("%H:%M");
+    g->GetXaxis()->SetLabelOffset(0.02);
+    g->GetXaxis()->SetTimeFormat("#splitline{%H:%M}{%m\/%d}");
     g->GetYaxis()->SetTitle("pressure (hPa)");
     g->GetYaxis()->SetTitleOffset(1.5);
     g->SetLineWidth(2);
