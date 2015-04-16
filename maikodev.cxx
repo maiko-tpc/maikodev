@@ -687,6 +687,7 @@ MainFrame::MainFrame(){
    TGPictureButton *fPictureButton761 = new TGPictureButton(fCompositeFrame750,gClient->GetPicture("/home/pi/maikodev/pic/kuma2.png"));
    fCompositeFrame750->AddFrame(fPictureButton761, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
    fPictureButton761->MoveResize(437,500,96,112);
+   fPictureButton761->SetCommand("gApplication->Terminate()");
 
    // "Connection check" group frame
    TGGroupFrame *fGroupFrame762 = new TGGroupFrame(fCompositeFrame750,"Connection check");
@@ -1156,6 +1157,7 @@ MainFrame::MainFrame(){
    TGPictureButton *fPictureButton816 = new TGPictureButton(fCompositeFrame771,gClient->GetPicture("/home/pi/maikodev/pic/kuma3.png"));
    fCompositeFrame771->AddFrame(fPictureButton816, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
    fPictureButton816->MoveResize(391,451,144,152);
+   fPictureButton816->SetCommand("gApplication->Terminate()");
 
 
    fTab693->SetTab(0);
@@ -1284,7 +1286,7 @@ void MainFrame::Record(){
   recfile = fTextEntry697->GetText();
   rec_int = atoi(fTextEntry719->GetText());
 
-  sprintf(command, "/home/pi/maikodev/program2/rec %s %d &", recfile, rec_int);
+  sprintf(command, "/home/pi/maikodev/program/rec %s %d &", recfile, rec_int);
 
   /* Check if the PLC CPU exits. */
   plc_result=system("ping -q -c 1 172.16.205.94 > /dev/null"); //RCNP
@@ -1357,7 +1359,7 @@ void MainFrame::Plot(){
       TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %lf %*lf %*lf", "");
       g->GetYaxis()->SetTitle("density (hoge)");
       g->GetYaxis()->SetTitleOffset(1.5);
-      g->SetMarkerColor(kRed);
+      g->SetMarkerColor(kViolet-6);
       g->SetTitle("gas monitor");
     
       gStyle->SetTimeOffset(-788918400);
@@ -1376,7 +1378,7 @@ void MainFrame::Plot(){
       TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %lf %*lf", "");
       g->GetYaxis()->SetTitle("dew point (deg)");
       g->GetYaxis()->SetTitleOffset(1.5);
-      g->SetMarkerColor(kRed);
+      g->SetMarkerColor(kTeal+4);
       g->SetTitle("gas monitor");
     
       gStyle->SetTimeOffset(-788918400);
@@ -1395,7 +1397,7 @@ void MainFrame::Plot(){
       TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %*lf %lf", "");
       g->GetYaxis()->SetTitle("dew point (ppm)");
       g->GetYaxis()->SetTitleOffset(1.5);
-      g->SetMarkerColor(kRed);
+      g->SetMarkerColor(kCyan+2);
       g->SetTitle("gas monitor");
     
       gStyle->SetTimeOffset(-788918400);
