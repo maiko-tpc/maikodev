@@ -1357,7 +1357,7 @@ void MainFrame::Plot(){
     /* Density */
     if(fComboBox722->GetSelected() == 3){
       TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %lf %*lf %*lf", "");
-      g->GetYaxis()->SetTitle("density (hoge)");
+      g->GetYaxis()->SetTitle("density (mmol/cm^{3})");
       g->GetYaxis()->SetTitleOffset(1.5);
       g->SetMarkerColor(kViolet-6);
       g->SetTitle("gas monitor");

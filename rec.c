@@ -101,11 +101,11 @@ int main(int argc, char * argv[]){
     if(pressure<0.0) pressure=0;
 
     temp = ADC_val[5]/30000.0*190.0-40.0;
-    density = pressure/(temp+273.15);
+    density = pressure/(temp+273.15)/83.1; //unit: mmol/cm3
     dew = ADC_val[8]*100.0/30000.0 -100.0;
 
     if(pressure > 0){
-      dew_ppm = 6.1078*pow(10.0,7.5*dew/(dew+237.3))/pressure;
+      dew_ppm = 6.1078*pow(10.0,7.5*dew/(dew+237.3))/pressure*1000000;
     }
 
     if(pressure <= 0){
