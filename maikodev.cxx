@@ -255,7 +255,7 @@ MainFrame::MainFrame(){
    fTextEntry697 = new TGTextEntry(fCompositeFrame696, new TGTextBuffer(31),-1,uGC->GetGC(),ufont->GetFontStruct(),kSunkenFrame | kDoubleBorder | kOwnBackground);
    fTextEntry697->SetMaxLength(4096);
    fTextEntry697->SetAlignment(kTextLeft);
-   fTextEntry697->SetText("/home/pi/maikodev/data/20140415.dat");
+   fTextEntry697->SetText("/home/pi/maikodev/data/20150424.dat");
    fTextEntry697->Resize(264,fTextEntry697->GetDefaultHeight());
    fCompositeFrame696->AddFrame(fTextEntry697, new TGLayoutHints(kLHintsRight | kLHintsTop,2,200,100,2));
    fTextEntry697->MoveResize(594,53,264,22);
@@ -276,7 +276,7 @@ MainFrame::MainFrame(){
    fTextEntry698 = new TGTextEntry(fCompositeFrame696, new TGTextBuffer(31),-1,uGC->GetGC(),ufont->GetFontStruct(),kSunkenFrame | kDoubleBorder | kOwnBackground);
    fTextEntry698->SetMaxLength(4096);
    fTextEntry698->SetAlignment(kTextLeft);
-   fTextEntry698->SetText("/home/pi/maikodev/data/20140415.dat");
+   fTextEntry698->SetText("/home/pi/maikodev/data/20150424.dat");
    fTextEntry698->Resize(264,fTextEntry698->GetDefaultHeight());
    fCompositeFrame696->AddFrame(fTextEntry698, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
    fTextEntry698->MoveResize(592,221,264,22);
@@ -1260,7 +1260,25 @@ void MainFrame::Print(){
   int pri_result;
 
   printer_name = fTextEntry746->GetText();
-  c123->SaveAs("out.ps");
+  if(fComboBox722->GetSelected() == 1){
+    c123->SaveAs("press.ps");
+  }
+
+  if(fComboBox722->GetSelected() == 2){
+    c123->SaveAs("tempe.ps");
+  }
+
+  if(fComboBox722->GetSelected() == 3){
+    c123->SaveAs("density.ps");
+  }
+
+  if(fComboBox722->GetSelected() == 4){
+    c123->SaveAs("dew-deg.ps");
+  }
+
+  if(fComboBox722->GetSelected() == 5){
+    c123->SaveAs("dew-ppm.ps");
+  }
 
   /* Check if the printer exist. */
   sprintf(pingcommand, "ping -q -c 1 %s > /dev/null", printer_name);
@@ -1297,6 +1315,8 @@ void MainFrame::Record(){
   }
   if(plc_result == 0){
     system(command);
+    printf("Record start!! \n");
+    printf("outputfile: %s \n", recfile);
     fTextEntry698->SetText(recfile);
   }
 }
