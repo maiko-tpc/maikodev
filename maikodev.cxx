@@ -1,4 +1,8 @@
 // Mainframe macro generated from application: /home/tatsuya/root/v5.34.07/bin/root.exe
+
+
+
+
 // By ROOT version 5.34/07 on 2015-04-15 14:45:15
 
 #ifndef ROOT_TGDockableFrame
@@ -1344,7 +1348,8 @@ void MainFrame::Plot(){
       g->SetMarkerColor(kBlue);
       g->SetTitle("gas monitor");
     
-      gStyle->SetTimeOffset(-788918400);
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(-789004800); // changed by 1day on 16/07/26
       gStyle->SetNdivisions(10);
       g->SetMarkerSize(1);
       g->SetMarkerStyle(21);
