@@ -1,9 +1,8 @@
 // Mainframe macro generated from application: /home/tatsuya/root/v5.34.07/bin/root.exe
 
-
-
-
 // By ROOT version 5.34/07 on 2015-04-15 14:45:15
+const int timeoffset = -789004800;
+
 
 #ifndef ROOT_TGDockableFrame
 #include "TGDockableFrame.h"
@@ -1349,7 +1348,8 @@ void MainFrame::Plot(){
       g->SetTitle("gas monitor");
     
       //      gStyle->SetTimeOffset(-788918400);
-      gStyle->SetTimeOffset(-789004800); // changed by 1day on 16/07/26
+      //      gStyle->SetTimeOffset(-789004800); // changed by 1day on 16/07/26
+      gStyle->SetTimeOffset(timeoffset); // changed by 1day on 16/07/26
       gStyle->SetNdivisions(10);
       g->SetMarkerSize(1);
       g->SetMarkerStyle(21);
@@ -1368,7 +1368,8 @@ void MainFrame::Plot(){
       g->SetMarkerColor(kRed);
       g->SetTitle("gas monitor");
     
-      gStyle->SetTimeOffset(-788918400);
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(timeoffset);
       gStyle->SetNdivisions(10);
       g->SetMarkerSize(1);
       g->SetMarkerStyle(21);
@@ -1387,7 +1388,8 @@ void MainFrame::Plot(){
       g->SetMarkerColor(kViolet-6);
       g->SetTitle("gas monitor");
     
-      gStyle->SetTimeOffset(-788918400);
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(timeoffset);
       gStyle->SetNdivisions(10);
       g->SetMarkerSize(1);
       g->SetMarkerStyle(21);
@@ -1406,7 +1408,8 @@ void MainFrame::Plot(){
       g->SetMarkerColor(kTeal+4);
       g->SetTitle("gas monitor");
     
-      gStyle->SetTimeOffset(-788918400);
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(timeoffset);
       gStyle->SetNdivisions(10);
       g->SetMarkerSize(1);
       g->SetMarkerStyle(21);
@@ -1425,7 +1428,8 @@ void MainFrame::Plot(){
       g->SetMarkerColor(kCyan+2);
       g->SetTitle("gas monitor");
     
-      gStyle->SetTimeOffset(-788918400);
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(timeoffset);
       gStyle->SetNdivisions(10);
       g->SetMarkerSize(1);
       g->SetMarkerStyle(21);
