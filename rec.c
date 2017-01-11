@@ -31,6 +31,7 @@ int main(int argc, char * argv[]){
   float density;
   float dew;
   float dew_ppm;
+  float flow[2];
   int rec_int;
 
   char *outfile;
@@ -100,6 +101,12 @@ int main(int argc, char * argv[]){
     pressure = 0.40/3.0*ADC_val[0]-p_offset;
     if(pressure<0.0) pressure=0;
 
+//    flow[0] = ADC_val[1]*100/15000.0*2.0 - 100.0;
+//    flow[1] = ADC_val[2]*100/15000.0*2.0 - 100.0;
+
+    flow[0] = 20.0*(-10+20/30000.0*ADC_val[1]);
+    flow[1] = 20.0*(-10+20/30000.0*ADC_val[2]);
+
     temp = ADC_val[5]/30000.0*190.0-40.0;
     density = pressure/(temp+273.15)/83.1; //unit: mmol/cm3
     dew = ADC_val[8]*100.0/30000.0 -100.0;
@@ -136,11 +143,13 @@ int main(int argc, char * argv[]){
     
     fprintf(output, "%d ", timer);
     
-    fprintf(output, "%f ", pressure);
-    fprintf(output, "%f ", temp);
-    fprintf(output, "%f ", density);
-    fprintf(output, "%f ", dew);
-    fprintf(output, "%f \n", dew_ppm);
+    fprintf(output, "%f " , pressure);
+    fprintf(output, "%f " , temp);
+    fprintf(output, "%f " , density);
+    fprintf(output, "%f " , dew);
+    fprintf(output, "%f " , dew_ppm);
+    fprintf(output, "%f " , flow[0]);
+    fprintf(output, "%f\n", flow[1]);
     fclose(output);
 
     sleep(rec_int);

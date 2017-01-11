@@ -418,6 +418,8 @@ MainFrame::MainFrame(){
    fComboBox722->AddEntry("Density",3);
    fComboBox722->AddEntry("Dew Point (deg)",4);
    fComboBox722->AddEntry("Dew Point (ppm)",5);
+   fComboBox722->AddEntry("Flow 1 (cc/min)",6);
+   fComboBox722->AddEntry("Flow 2 (cc/min)",7);
    fComboBox722->Resize(144,22);
    fComboBox722->Select(1);
    fCompositeFrame696->AddFrame(fComboBox722, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
@@ -1313,15 +1315,27 @@ void MainFrame::Record(){
   plc_result=system("ping -q -c 1 172.16.205.94 > /dev/null"); //RCNP
   //plc_result=system("ping -q -c 1 172.16.213.8 > /dev/null"); // New SUBARU
 
+  /* Output file entity check */
+  std::ifstream ifsTemp(recfile);
+  bool bFileEntity = ifsTemp.is_open();
+  ifsTemp.close();
+
+
   if(plc_result != 0){
-    cout << "CPU connection error!!" << endl;
+    cout << "PLC CPU connection error!!" << endl;
+    cout << "Please check the network connection." << endl;
   }
-  if(plc_result == 0){
+  else if(bFileEntity == true){
+    cout << "Record file already exists!!" << endl;
+  }
+  else{
     system(command);
     printf("Record start!! \n");
     printf("outputfile: %s \n", recfile);
     fTextEntry698->SetText(recfile);
   }
+
+  system(Form("/home/pi/maikodev/monitor/monitord %s",recfile));
 }
 
 void MainFrame::Plot(){
@@ -1341,7 +1355,7 @@ void MainFrame::Plot(){
 
     /* Pressure */
     if(fComboBox722->GetSelected() == 1){
-      TGraph *g = new TGraph(plotfile, "%lf %lf %*lf %*lf %*lf %*lf", "");
+      TGraph *g = new TGraph(plotfile, "%lf %lf %*lf %*lf %*lf %*lf %*lf %*lf", "");
       g->GetYaxis()->SetTitle("pressure (hPa)");
       g->GetYaxis()->SetTitleOffset(1.5);
       g->SetMarkerColor(kBlue);
@@ -1362,7 +1376,7 @@ void MainFrame::Plot(){
 
     /* Temperature */
     if(fComboBox722->GetSelected() == 2){
-      TGraph *g = new TGraph(plotfile, "%lf %*lf %lf %*lf %*lf %*lf", "");
+      TGraph *g = new TGraph(plotfile, "%lf %*lf %lf %*lf %*lf %*lf %*lf %*lf", "");
       g->GetYaxis()->SetTitle("temperature (deg)");
       g->GetYaxis()->SetTitleOffset(1.5);
       g->SetMarkerColor(kRed);
@@ -1382,7 +1396,7 @@ void MainFrame::Plot(){
 
     /* Density */
     if(fComboBox722->GetSelected() == 3){
-      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %lf %*lf %*lf", "");
+      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %lf %*lf %*lf %*lf %*lf", "");
       g->GetYaxis()->SetTitle("density (mmol/cm^{3})");
       g->GetYaxis()->SetTitleOffset(1.5);
       g->SetMarkerColor(kViolet-6);
@@ -1402,7 +1416,7 @@ void MainFrame::Plot(){
 
     /* Dew-Point (degree) */
     if(fComboBox722->GetSelected() == 4){
-      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %lf %*lf", "");
+      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %lf %*lf %*lf %*lf", "");
       g->GetYaxis()->SetTitle("dew point (deg)");
       g->GetYaxis()->SetTitleOffset(1.5);
       g->SetMarkerColor(kTeal+4);
@@ -1422,8 +1436,48 @@ void MainFrame::Plot(){
 
     /* Dew-Point (ppm) */
     if(fComboBox722->GetSelected() == 5){
-      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %*lf %lf", "");
+      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %*lf %lf %*lf %*lf", "");
       g->GetYaxis()->SetTitle("dew point (ppm)");
+      g->GetYaxis()->SetTitleOffset(1.5);
+      g->SetMarkerColor(kCyan+2);
+      g->SetTitle("gas monitor");
+    
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(timeoffset);
+      gStyle->SetNdivisions(10);
+      g->SetMarkerSize(1);
+      g->SetMarkerStyle(21);
+      g->SetLineWidth(2);
+      g->GetXaxis()->SetTimeDisplay(1);
+      g->GetXaxis()->SetLabelOffset(0.02);
+      g->GetXaxis()->SetTimeFormat("#splitline{%H:%M}{%m\/%d}");
+      g->Draw("AP");
+    }
+
+ /* Flow 1 (cc/min) */
+    if(fComboBox722->GetSelected() == 6){
+      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %*lf %*lf %lf %*lf", "");
+      g->GetYaxis()->SetTitle("Flow 1 (cc/min)");
+      g->GetYaxis()->SetTitleOffset(1.5);
+      g->SetMarkerColor(kCyan+2);
+      g->SetTitle("gas monitor");
+    
+      //      gStyle->SetTimeOffset(-788918400);
+      gStyle->SetTimeOffset(timeoffset);
+      gStyle->SetNdivisions(10);
+      g->SetMarkerSize(1);
+      g->SetMarkerStyle(21);
+      g->SetLineWidth(2);
+      g->GetXaxis()->SetTimeDisplay(1);
+      g->GetXaxis()->SetLabelOffset(0.02);
+      g->GetXaxis()->SetTimeFormat("#splitline{%H:%M}{%m\/%d}");
+      g->Draw("AP");
+    }
+
+ /* Flow 2 (cc/min) */
+    if(fComboBox722->GetSelected() == 7){
+      TGraph *g = new TGraph(plotfile, "%lf %*lf %*lf %*lf %*lf %*lf %*lf %lf", "");
+      g->GetYaxis()->SetTitle("Flow 2 (cc/min)");
       g->GetYaxis()->SetTitleOffset(1.5);
       g->SetMarkerColor(kCyan+2);
       g->SetTitle("gas monitor");
