@@ -1,8 +1,8 @@
 // Mainframe macro generated from application: /home/tatsuya/root/v5.34.07/bin/root.exe
 
 // By ROOT version 5.34/07 on 2015-04-15 14:45:15
-const int timeoffset = -789004800;
-
+//const int timeoffset = -789004800;
+const int timeoffset = -788918400
 
 #ifndef ROOT_TGDockableFrame
 #include "TGDockableFrame.h"
@@ -258,7 +258,7 @@ MainFrame::MainFrame(){
    fTextEntry697 = new TGTextEntry(fCompositeFrame696, new TGTextBuffer(31),-1,uGC->GetGC(),ufont->GetFontStruct(),kSunkenFrame | kDoubleBorder | kOwnBackground);
    fTextEntry697->SetMaxLength(4096);
    fTextEntry697->SetAlignment(kTextLeft);
-   fTextEntry697->SetText("/home/pi/maikodev/data/20150424.dat");
+   fTextEntry697->SetText("/home/pi/maikodev/data/20171004.dat");
    fTextEntry697->Resize(264,fTextEntry697->GetDefaultHeight());
    fCompositeFrame696->AddFrame(fTextEntry697, new TGLayoutHints(kLHintsRight | kLHintsTop,2,200,100,2));
    fTextEntry697->MoveResize(594,53,264,22);
@@ -279,7 +279,7 @@ MainFrame::MainFrame(){
    fTextEntry698 = new TGTextEntry(fCompositeFrame696, new TGTextBuffer(31),-1,uGC->GetGC(),ufont->GetFontStruct(),kSunkenFrame | kDoubleBorder | kOwnBackground);
    fTextEntry698->SetMaxLength(4096);
    fTextEntry698->SetAlignment(kTextLeft);
-   fTextEntry698->SetText("/home/pi/maikodev/data/20150424.dat");
+   fTextEntry698->SetText("/home/pi/maikodev/data/20171004.dat");
    fTextEntry698->Resize(264,fTextEntry698->GetDefaultHeight());
    fCompositeFrame696->AddFrame(fTextEntry698, new TGLayoutHints(kLHintsLeft | kLHintsTop,2,2,2,2));
    fTextEntry698->MoveResize(592,221,264,22);
